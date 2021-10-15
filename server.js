@@ -24,45 +24,7 @@ app.route('/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
   });
-
-app.get('/api/convert', (req, res) => {
-  let { input } = req.query;
-  input = input.toLowerCase();
-  let num = input.replace(/[a-z]+$/, '');
-  let unit = /[a-z]+$/.match(input);
-  num = (num.length === 0) ? '1' : num;
-
-  let str = input.replace(/^(.+)([a-z]+)$/, (match, num, unit) => {
-    num = (num.length === 0) ? '1' : num;
-    let err1 = /^(\d)?(\.)?(\d)+(\/\d+)?$/.test(num);
-    let err2 = /^gal|l|km|mi|lbs|kg$/.test(unit);
-
-    if (!err1 && !err2) {
-      return "invalid number and unit";
-    } else if (!err1) {
-      return "invalid number";
-    } else if (!err2) {
-      return "invalid unit";
-    } else {
-      return {
-        num: eval(num),
-        unit: unit
-      };
-    }
-  });
-
-
-  /*const reg = /^(\d)?(\.)?(\d)+(\/\d+)?gal|l|km|mi|lbs|kg$/;
-  console.log(req.query);
-  res.json({
-    "initNum": 1,
-    "initUnit": "kg",
-    "returnNum": 2.20462,
-    "returnUnit": "lbs",
-    "string": "1 kilograms converts to 2.20462 pounds"
-  })*/
-});
-
+  
 //For FCC testing purposes
 fccTestingRoutes(app);
 

@@ -1,9 +1,7 @@
 function ConvertHandler() {
 
   this.getNum = function (input) {
-    let num = input
-      .toLowerCase()
-      .replace(/[a-z]+$/, '') || '1';
+    let num = input.replace(/[a-z]+$/, '') || '1';
     let result = /^(\d)?(\.)?(\d)+(\/\d+)?$/.test(num);
 
     if (!result) {
@@ -14,7 +12,7 @@ function ConvertHandler() {
   };
 
   this.getUnit = function (input) {
-    let unit = /[a-z]+$/.exec(input.toLowerCase())[0];
+    let unit = /[a-z]+$/.exec(input)[0];
     let result = /^(gal|l|km|mi|lbs|kg)$/.test(unit);
 
     if (!result) {
@@ -25,7 +23,7 @@ function ConvertHandler() {
   };
 
   this.getReturnUnit = function (initUnit) {
-    const pairs = {
+    const pairMap = {
       "gal": "L",
       "L": "gal",
       "mi": "km",
@@ -34,11 +32,11 @@ function ConvertHandler() {
       "kg": "lbs"
     };
 
-    return pairs[initUnit];
+    return pairMap[initUnit];
   };
 
   this.spellOutUnit = function (unit) {
-    const formalNames = {
+    const nameMap = {
       "gal": "gallons",
       "L": "liters",
       "mi": "miles",
@@ -47,7 +45,7 @@ function ConvertHandler() {
       "kg": "kilograms"
     };
 
-    return formalNames[unit];
+    return nameMap[unit];
   };
 
   this.convert = function (initNum, initUnit) {
@@ -57,22 +55,22 @@ function ConvertHandler() {
     let result;
 
     switch (initUnit) {
-      case gal:
+      case 'gal':
         result = initNum * galToL;
         break;
-      case L:
+      case 'L':
         result = initNum / galToL;
         break;
-      case mi:
+      case 'mi':
         result = initNum * miToKm;
         break;
-      case km:
+      case 'km':
         result = initNum / miToKm;
         break;
-      case lbs:
+      case 'lbs':
         result = initNum * lbsToKg;
         break;
-      case kg:
+      case 'kg':
         result = initNum / lbsToKg;
         break;
     }
@@ -81,9 +79,10 @@ function ConvertHandler() {
   };
 
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
-    let part1 = initNum + ' ' + this.spellOutUnit(initUnit);
-    let part2 = returnNum + ' ' + this.spellOutUnit(returnUnit);
-    return part1 + ' converts to ' + part2;
+    let str_head = initNum + ' ' + this.spellOutUnit(initUnit),
+        str_body = ' converts to ',
+        str_foot = returnNum + ' ' + this.spellOutUnit(returnUnit);
+    return str_head + str_body + str_foot;
   };
 
 }
