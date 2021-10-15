@@ -26,10 +26,33 @@ app.route('/')
   });
 
 app.get('/api/convert', (req, res) => {
-  const { input } = req.query;
-  const str = input.toLowerCase();
-  const reg = /^(\d)?(\.)?(\d)+(\/\d+)?gal|l|km|mi|lbs|kg$/;
+  let { input } = req.query;
+  input = input.toLowerCase();
+  let num = input.replace(/[a-z]+$/, '');
+  let unit = /[a-z]+$/.match(input);
+  num = (num.length === 0) ? '1' : num;
 
+  let str = input.replace(/^(.+)([a-z]+)$/, (match, num, unit) => {
+    num = (num.length === 0) ? '1' : num;
+    let err1 = /^(\d)?(\.)?(\d)+(\/\d+)?$/.test(num);
+    let err2 = /^gal|l|km|mi|lbs|kg$/.test(unit);
+
+    if (!err1 && !err2) {
+      return "invalid number and unit";
+    } else if (!err1) {
+      return "invalid number";
+    } else if (!err2) {
+      return "invalid unit";
+    } else {
+      return {
+        num: eval(num),
+        unit: unit
+      };
+    }
+  });
+
+
+  /*const reg = /^(\d)?(\.)?(\d)+(\/\d+)?gal|l|km|mi|lbs|kg$/;
   console.log(req.query);
   res.json({
     "initNum": 1,
@@ -37,7 +60,7 @@ app.get('/api/convert', (req, res) => {
     "returnNum": 2.20462,
     "returnUnit": "lbs",
     "string": "1 kilograms converts to 2.20462 pounds"
-  })
+  })*/
 });
 
 //For FCC testing purposes
