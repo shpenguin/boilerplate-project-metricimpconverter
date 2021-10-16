@@ -2,7 +2,9 @@ function ConvertHandler() {
 
   this.getNum = function (input) {
     let num = input.replace(/[a-z]+$/, '') || '1';
-    let result = /^(\d)?(\.)?(\d)+(\/\d+)?$/.test(num);
+    let result = /^\d*\.?(?<=\.)\d+(\/\.?(?<=\.)\d+)?$/.test(num);
+                 /^\d*\.?\d+(\/\d+(?=(\.))\.?\d+)?$/.test(".5/.4");
+                 /^(0|[1-9]\d*)?\.?\d+(\/((0|[1-9]\d*)\.)?\d+)?$/.test("024.5/040.4");
 
     if (!result) {
       return result;
