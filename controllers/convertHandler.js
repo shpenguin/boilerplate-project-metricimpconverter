@@ -13,23 +13,16 @@ function ConvertHandler() {
       return false;
     }
 
-    let test_NaN;
-
     arr.forEach(val => {
       val = +val;
 
       if (isNaN(val) || val === 0) {
-        test_NaN = true;
-        break;
+        return false;
       }
       
     });
 
-    if (test_NaN) {
-      return false;
-    } else {
-      return (arr.length === 2) ? (arr[0] / arr[1]) : arr[0];
-    }
+    return (arr.length === 2) ? (arr[0] / arr[1]) : arr[0];
     
     /*let result = /^\d*\.?(?<=\.)\d+(\/\.?(?<=\.)\d+)?$/.test(num);
                  /^\d*\.?\d+(\/\d+(?=(\.))\.?\d+)?$/.test(".5/.4");
