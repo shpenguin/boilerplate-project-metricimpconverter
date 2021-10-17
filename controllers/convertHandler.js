@@ -1,7 +1,7 @@
 function ConvertHandler() {
 
   this.getNum = function (input) {
-    let num = input.replace(/[a-z]+$/, '') || '1';
+    let num = input.replace(/[a-z].+$/, '') || '1';
 
     if (/\s/.test(num)) {
       return false;
@@ -37,7 +37,7 @@ function ConvertHandler() {
   };
 
   this.getUnit = function (input) {
-    let unit = /[a-z]+$/.exec(input)[0];
+    let unit = /[a-z].+$/.exec(input)[0];
     let result = /^(gal|l|km|mi|lbs|kg)$/.test(unit);
 
     if (!result) {
