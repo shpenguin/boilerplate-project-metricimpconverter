@@ -23,17 +23,6 @@ function ConvertHandler() {
     });
 
     return (arr.length === 2) ? (arr[0] / arr[1]) : arr[0];
-    
-    /*let result = /^\d*\.?(?<=\.)\d+(\/\.?(?<=\.)\d+)?$/.test(num);
-                 /^\d*\.?\d+(\/\d+(?=(\.))\.?\d+)?$/.test(".5/.4");
-                 /^(0*|[1-9]\d*)?\.?\d+(\/((0*|[1-9]\d*)\.)?\d+)?$/.test("024.5/040.4");
-                 /^(\d*)?\.?\d+(\/((\d*)\.)?\d+)?$/.test("024.5/040.4");
-
-    if (!result) {
-      return result;
-    }
-
-    return eval(num);*/
   };
 
   this.getUnit = function (input) {
@@ -42,7 +31,7 @@ function ConvertHandler() {
     if (unit === 'l') {
       return 'L';
     }
-    
+
     let result = /^(gal|km|mi|lbs|kg)$/.test(unit);
 
     if (!result) {
