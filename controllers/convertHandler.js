@@ -1,7 +1,7 @@
 function ConvertHandler() {
 
   this.getNum = function (input) {
-    let num = input.replace(/[a-z].+$/, '') || '1';
+    let num = input.replace(/[a-z].*$/i, '') || '1';
 
     if (/\s/.test(num)) {
       return false;
@@ -37,14 +37,19 @@ function ConvertHandler() {
   };
 
   this.getUnit = function (input) {
-    let unit = /[a-z].+$/.exec(input)[0];
-    let result = /^(gal|l|km|mi|lbs|kg)$/.test(unit);
+    let unit = /[a-z].*$/i.exec(input)[0].toLowerCase();
+
+    if (unit === 'l') {
+      return 'L';
+    }
+    
+    let result = /^(gal|km|mi|lbs|kg)$/.test(unit);
 
     if (!result) {
       return result;
     }
 
-    return unit === "l" ? "L" : unit;
+    return unit;
   };
 
   this.getReturnUnit = function (initUnit) {
@@ -107,6 +112,7 @@ function ConvertHandler() {
     let str_head = initNum + ' ' + this.spellOutUnit(initUnit),
         str_body = ' converts to ',
         str_foot = returnNum + ' ' + this.spellOutUnit(returnUnit);
+
     return str_head + str_body + str_foot;
   };
 
