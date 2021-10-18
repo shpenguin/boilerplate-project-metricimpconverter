@@ -13,16 +13,10 @@ function ConvertHandler() {
       return false;
     }
 
-    arr.forEach(val => {
-      val = +val;
-
-      if (isNaN(val) || val === 0) {
-        return false;
-      }
-      
-    });
-
-    return (arr.length === 2) ? (arr[0] / arr[1]) : arr[0];
+    arr.forEach(val => parseFloat(val));
+    const result = eval(arr.join('/'));
+    const odd = (isNaN(result) || result === 0 || result === Infinity);
+    return odd ? false : result;
   };
 
   this.getUnit = function (input) {
